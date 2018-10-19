@@ -26,25 +26,25 @@ pub struct Endpoint<U: UdpLike> {
 	socket: U,
 	buf: Vec<u8>,
 	buf_free_start: usize,
-	buf_min_space: usize,
-		max_yielded: ModOrd, // for acking
-		time_last_acked: Instant,
+	max_yielded: ModOrd, // for acking
+	time_last_acked: Instant,
 
 	//outgoing
-		next_id: ModOrd,
-		wait_until: ModOrd,
+	next_id: ModOrd,
+	wait_until: ModOrd,
 	 // only stores delivery messages
-		outbox: HashMap<ModOrd, (Instant, *mut [u8])>,
-		outbox2: HashMap<ModOrd, (Instant, Vec<u8>)>,
-		peer_acked: ModOrd,
-		out_buf_written: usize,
+	outbox: HashMap<ModOrd, (Instant, *mut [u8])>,
+	outbox2: HashMap<ModOrd, (Instant, Vec<u8>)>,
+	peer_acked: ModOrd,
+	out_buf_written: usize,
 
 	//incoming
-		n: ModOrd,
-		largest_set_id_yielded: ModOrd,
-		seen_before: HashSet<ModOrd>, // contains messages only in THIS set
-		inbox: HashMap<ModOrd, Message>,
-		inbox2: HashMap<ModOrd, OwnedMessage>, 
+	buf_min_space: usize,
+	n: ModOrd,
+	largest_set_id_yielded: ModOrd,
+	seen_before: HashSet<ModOrd>, // contains messages only in THIS set
+	inbox: HashMap<ModOrd, Message>,
+	inbox2: HashMap<ModOrd, OwnedMessage>, 
 	inbox2_to_remove: Option<ModOrd>,
 }
 

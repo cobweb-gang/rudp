@@ -1,6 +1,7 @@
 
 use std::io;
 use std;
+use mio;
 use std::time::Duration;
 use resend_predicates;
 
@@ -20,6 +21,15 @@ impl UdpLike for std::net::UdpSocket {
 	}
 	fn recv(&mut self, buf: &mut [u8]) -> io::Result<usize> {
 		std::net::UdpSocket::recv(self, buf)
+	}
+}
+
+impl UdpLike for mio::net::UdpSocket {
+	fn send(&mut self, buf: &[u8]) -> io::Result<usize> {
+		mio::net::UdpSocket::send(self, buf)
+	}
+	fn recv(&mut self, buf: &mut [u8]) -> io::Result<usize> {
+		mio::net::UdpSocket::recv(self, buf)
 	}
 }
 

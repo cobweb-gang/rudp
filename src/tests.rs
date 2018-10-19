@@ -50,8 +50,7 @@ impl BadUdp {
 		} else {
 			let i = thread_rng().gen_range(0, self.messages.len());
 			let m = self.messages.remove(i);
-			buf.write_all(&m)?;
-			Ok(m.len())
+			buf.write(&m)
 		}
 	}
 }
